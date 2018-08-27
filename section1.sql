@@ -57,25 +57,26 @@ AS
 
 
 INSERT INTO bi_data.valid_offers
-            (offer_id,
-             hotel_id,
-             price_usd,
-             original_price,
-             original_currency_code,
-             checkin_date,
-             checkout_date,
-             breakfast_included_flag,
-             valid_from_date,
-             valid_to_date)
-	SELECT offer_cleanse_date_fix.id AS 'offer_id',
-       offer_cleanse_date_fix.hotel_id AS 'hotel_id',
-       offer_cleanse_date_fix.sellings_price AS 'selling_price',
-       lst_currency.code AS 'original_currency_code',
-       offer_cleanse_date_fix.checkin_date AS 'check_in date',
-       offer_cleanse_date_fix.checkout_date AS 'check_out data',
-       offer_cleanse_date_fix.breakfast_included_flag AS 'breakfast_included',
-       offer_cleanse_date_fix.offer_valid_from AS 'offer_valid_from',
-       offer_cleanse_date_fix.offer_valid_to AS 'offer_valid_to'
+    (offer_id,
+    hotel_id,
+    price_usd,
+    original_price,
+    original_currency_code,
+    checkin_date,
+    checkout_date,
+    breakfast_included_flag,
+    valid_from_date,
+    valid_to_date)
+	SELECT
+        offer_cleanse_date_fix.id AS 'offer_id',
+        offer_cleanse_date_fix.hotel_id AS 'hotel_id',
+        offer_cleanse_date_fix.sellings_price AS 'selling_price',
+        lst_currency.code AS 'original_currency_code',
+        offer_cleanse_date_fix.checkin_date AS 'check_in date',
+        offer_cleanse_date_fix.checkout_date AS 'check_out data',
+        offer_cleanse_date_fix.breakfast_included_flag AS 'breakfast_included',
+        offer_cleanse_date_fix.offer_valid_from AS 'offer_valid_from',
+        offer_cleanse_date_fix.offer_valid_to AS 'offer_valid_to'
 	FROM enterprise_data.offer_cleanse_date_fix,
 		primary_data.lst_currency
 		WHERE 1=1
