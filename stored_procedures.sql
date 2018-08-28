@@ -80,3 +80,83 @@ SELECT * FROM sample_staff.user_login;
 SHOW events;
 
 
+
+-- S08-P01 Coding practice
+
+USE sample_staff;
+
+CREATE VIEW v_average_salary
+AS
+	SELECT
+		department.id AS department_id,
+        department.name AS department_name,
+        AVG(salary.salary_amount) AS average_salary_amount,
+        CONCAT(MONTH(invoice.invoiced_date), '/', YEAR(invoice.invoiced_date))
+			AS month_year
+	FROM sample_staff.department
+    JOIN sample_staff.department
+    ON 1=1
+		AND sample_staff.department_employee_rel.department_id
+			= department_id
+	JOIN department_employee_rel
+    ON 1=1
+		AND employee_id = sample_staff.salary.employee_id
+        AND invoice.invoiced_date BETWEEN salary.from_date
+			AND salary.to_date
+	JOIN salary
+    ON 1=1
+		AND employee_id = invoice.employee_id
+        AND invoice.invoiced_date BETWEEN from_date AND to_date
+GROUP BY
+	department_id,
+    department_name
+;
+
+
+
+
+-- S08-P03 Coding practice
+
+
+USE sample_staff;
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE INS_USER_STAT
+(
+	user_id INT
+)
+BEGIN
+	INSERT INTO sample_staff.user_stat
+    (user_id, login_date, login_hour, login_count)
+		SELECT 
+			user_id,
+            CURDATE() AS login_date,
+            HOUR(NOW()) AS login_hour,
+            COUNT(login_count)+1 AS login_count
+		FROM sample_staff.user_stat
+        WHERE 1=1
+			AND user_stat.login_date = login_date
+            AND user_stat.login_hour = login_hour
+		;
+END;
+//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+        
+        
+        
+        
+
+
